@@ -1,0 +1,11 @@
+{
+  "scripts": {
+  "combine": "node combine.js"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.8",
+    "alpinejs": "^3.14.9",
+    "tailwindcss": "^4.1.8"
+  } 
+
+}
