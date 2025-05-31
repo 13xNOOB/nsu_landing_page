@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <head>
+<meta charset=
+"UTF-8" />
+<title>Animated Gradient Overlay</title>
+<!-- MISSING: viewport meta tag -->
+    </head>
+    <meta charset="UTF-8" />
+    <title>Animated Gradient Overlay</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @keyframes gradient-move {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+      .animated-gradient {
+        background: linear-gradient(-45deg, #8b5cf6, #ec4899, #ef4444);
+        background-size: 300% 300%;
+        animation: gradient-move 10s ease infinite;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-gray-100 relative" x-data="{ open: false }">
+    <!-- Toggle Button -->
+    <button
+      @click="open = !open"
+      class="fixed top-4 right-4 z-50 p-3 bg-indigo-600 rounded-md hover:bg-indigo-700 flex flex-col justify-center items-center space-y-1 group"
+    >
+      <!-- Top bar -->
+      <span
+        class="block w-6 h-0.5 bg-white transition-all duration-300 ease-in-out origin-center"
+        :class="open ? 'rotate-45 translate-y-2' : ''"
+      ></span>
+      <!-- Middle bar -->
+      <span
+        class="block w-6 h-0.5 bg-white transition-all duration-300 ease-in-out"
+        :class="open ? 'opacity-0 scale-0' : ''"
+      ></span>
+      <!-- Bottom bar -->
+      <span
+        class="block w-6 h-0.5 bg-white transition-all duration-300 ease-in-out origin-center"
+        :class="open ? '-rotate-45 -translate-y-2' : ''"
+      ></span>
+    </button>
+
+    <!-- Fullscreen Overlay -->
+    <div
+      x-show="open"
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-200"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+      class="fixed inset-0 z-40 flex"
+      @click.self="open = false"
+    >
+      <!-- Animated Gradient Background Layer -->
+      <div class="absolute inset-0 animated-gradient z-0"></div>
+
+      <!-- Responsive Columns on top of gradient -->
+      <div class="relative z-10 flex flex-col md:flex-row w-full h-full">
+        <!-- Column 1 (Hidden on mobile, visible on md and up) -->
+        <div
+          class="hidden md:flex relative md:w-1/4 items-center justify-center bg-transparent"
+        >
+          <!-- Image behind gradient -->
+          <img
+            src="assets/nsu-logo.png"
+            alt="NSU Logo"
+            class="absolute inset-0 m-auto max-w-[250px] opacity-30 z-0"
+          />
+          <div class="z-10 text-white text-2xl font-bold"></div>
+        </div>
+
+        <!-- Column 2 (Full width on mobile, half width on md and up) -->
+        <div
+          class="w-full md:w-1/2 flex items-center justify-center text-white text-2xl font-bold bg-transparent"
+        >
+          col2
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

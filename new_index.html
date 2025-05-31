@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Overlay Menu with Gradient Background and Accordion</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Alpine.js for reactive behavior -->
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<!-- Tailwind CSS for styling -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+    @media (max-height: 640px) {
+        .max-h-\[60vh\] {
+            max-height: 50vh;
+        }
+        }
+
+@keyframes gradient-move {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.animated-gradient {
+  background: linear-gradient(-45deg, #8b5cf6, #ec4899, #ef4444);
+  background-size: 300% 300%;
+  animation: gradient-move 10s ease infinite;
+}
+</style>
+</head>
+<body class="min-h-screen bg-gray-100" x-data="{ menuOpen: false }">
+
+<!-- Overlay toggle button -->
+<header class="fixed top-0 left-0 right-0 z-30 bg-white shadow-sm py-2 px-4 flex items-center justify-between">
+    <!-- Logo on the left -->
+    <div class="flex items-center">
+      <img src="assets/nsu-logo.png" alt="NSU Logo" class="h-12 w-auto" />
+    </div>
+  
+    <!-- Rotating text in the center -->
+    <div
+      class="flex-grow text-center px-4"
+      x-data="{ currentText: 0, texts: ['Center of Excellence in Higher Education', 'The First Private University in Bangladesh'], show: true }"
+      x-init="setInterval(() => { show = false; setTimeout(() => { currentText = (currentText + 1) % texts.length; show = true; }, 500); }, 3000)"
+    >
+      <span
+        class="text-xl md:text-2xl font-bold font-serif text-gray-800 transition-opacity duration-300"
+        x-text="texts[currentText]"
+        x-show="show"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+      ></span>
+    </div>
+  </header>
+  
+
+  <button @click="menuOpen = !menuOpen" class="fixed top-4 right-4 z-50 p-3 bg-indigo-600 rounded-md hover:bg-indigo-700 flex flex-col justify-center items-center space-y-1">
+    <!-- Hamburger to Cross icon with animation -->
+    <span class="block w-6 h-0.5 bg-white transition-transform duration-300 origin-center" :class="menuOpen ? 'rotate-45 translate-y-2' : ''"></span>
+    <span class="block w-6 h-0.5 bg-white transition-all duration-300" :class="menuOpen ? 'opacity-0 scale-0' : ''"></span>
+    <span class="block w-6 h-0.5 bg-white transition-transform duration-300 origin-center" :class="menuOpen ? '-rotate-45 -translate-y-2' : ''"></span>
+  </button>
+  
+  <!-- Overlay menu -->
+  <div
+    x-show="menuOpen"
+    x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-200"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0"
+    class="fixed inset-0 z-40 flex items-center justify-center"
+    @click.self="menuOpen = false"
+  >
+  <!-- Gradient Background Layer -->
+  <div class="absolute inset-0 animated-gradient z-0"></div>
+
+  <!-- Content Wrapper -->
+  <div class="relative z-[100] w-full max-w-7xl h-full flex flex-col md:flex-row p-4 space-y-4 md:space-y-0 md:space-x-4 overflow-y-auto">
+    
+    <!-- Logo Column (Hidden on Mobile) -->
+    <div class="hidden md:flex md:w-1/4 items-center justify-center bg-transparent relative z-0">
+      <img src="assets/nsu-logo.png" alt="NSU Logo" 
+           class="absolute inset-0 m-auto max-w-[250px] opacity-30 z-0" />
+    </div>
+
+    <!-- Accordion Column -->
+<div class="w-full md:flex-1 bg-transparent flex items-center justify-center p-4">
+    <div class="w-full space-y-2" x-data="{ activeSection: null }"> <!-- Removed max-w-3xl -->
+      <template x-for="section in [
+        {
+          id: 'about',
+          title: 'ABOUT NSU',
+          content: [
+            { 
+              title: 'ABOUT NSU',
+              links: [
+                { title: 'Brief History', href: '[[~47~]]' },
+                { title: 'Vision, Mission & Strategy', href: '[[~167~]]' },
+                { title: 'International Advisory Board', href: '[[~49~]]' },
+                { title: 'Accreditation', href: '[[~168~]]' }
+              ]
+            },
+            { 
+              title: 'NSU Trustees',
+              links: [
+                { title: 'Board of Trustees', href: '[[~109~]]' }
+              ]
+            },
+            { 
+              title: 'Executive Leaders',
+              links: [
+                { title: 'VC, Pro-VC & Treasurer', href: '[[~4145~]]' },
+                { title: 'Deans, Chairs & Directors', href: '[[~4145~]]' },
+                { title: 'Administration', href: '[[~4145~]]' }
+              ]
+            },
+            { 
+              title: 'Authorities',
+              links: [
+                { title: 'Syndicate', href: 'http://www.northsouth.edu/assets/cv/Syndicate.pdf' },
+                { title: 'Academic Council', href: '/newassets/images/5-364.Academic Council -March-2023.pdf' }
+              ]
+            }
+          ]
+        },
+        {
+          id: 'academic',
+          title: 'Academic',
+          content: [
+            { 
+              title: 'School of Business & Economics',
+              links: [
+                { title: 'School of Business & Economics', href: '[[~56~]]' },
+                { title: 'Accounting & Finance', href: '[[~57~]]' },
+                { title: 'Economics', href: '[[~2890~]]' },
+                { title: 'Management', href: '[[~58~]]' },
+                { title: 'Marketing & International Business', href: '[[~69~]]' },
+                { title: 'MBA & EMBA Programs', href: '[[~3581~]]' },
+              ]
+            },
+            { 
+              title: 'School of Engineering & Physical Sciences',
+              links: [
+                { title: 'Architecture', href: '[[~64~]]' },
+                { title: 'Civil and Environmental Engineering', href: '[[~62~]]' },
+                { title: 'Electrical & Computer Engineering', href: 'http://ece.northsouth.edu/' },
+                { title: 'Mathematics & Physics', href: '[[~1539~]]' }
+              ]
+            },
+            { 
+                title: 'School of Humanities & Social Sciences',
+                links: [
+                  { title: 'English & Modern Languages', href: '[[~71~]]' },
+                  { title: 'Political Science & Sociology', href: '[[~67~]]' },
+                  { title: 'Law', href: '[[~191~]]' },
+                  { title: 'History & Philosophy', href: '[[~1540~]]' }
+                ]
+              },
+              { 
+                title: 'School of Health & Life Sciences',
+                links: [
+                  { title: 'Biochemistry & Microbiology', href: '[[~61~]]' },
+                  { title: 'Environmental Science & Management', href: '[[~2643~]]' },
+                  { title: 'Pharmaceutical Sciences', href: '[[~70~]]' },
+                  { title: 'Public Health', href: '[[~60~]]' }
+                ]
+              }
+          ]
+        },
+        {
+            id: 'Institutes, Centers and Miscellaneous',
+            title: 'Institutes, Centers and Miscellaneous',
+            content: [
+              {
+                title: 'Miscellaneous',
+                links: [
+                  { title: 'Grading Policy', href: '[[~124~]]' },
+                  { title: 'Student Records', href: '[[~1366~]]' },
+                  { title: 'Academic Information and Policies', href: 'http://www.northsouth.edu/assets/cv/Last Update Academic Information and Policies-08062021.pdf' }
+                ]
+              },
+              {
+                title: 'Institutes & Centers',
+                links: [
+                  { title: 'Institute of Modern Languages', href: '[[~1806~]]' },
+                  { title: 'Confucius Institute', href: '[[~189~]]' },
+                  { title: 'NSU Global Health Institute (NGHI)', href: '[[~3171~]]' },
+                  { title: 'NSU Genome Research Institute (NGRI)', href: '[[~4212~]]' }
+                ]
+              },
+              {
+                title: 'More Centers',
+                links: [
+                  { title: 'Institutional Quality Assurance Cell (IQAC)', href: 'http://institutions.northsouth.edu/iqac/' },
+                  { title: 'Career & Placement Center (CPC)', href: 'https://cpc.northsouth.edu/' },
+                  { title: 'South Asian Institute of Policy and Governance (SIPG)', href: 'http://sipg.northsouth.edu' },
+                  { title: 'NSU Center for Business Research (NSU CBR)', href: 'http://www.northsouth.edu/research-innovation/cbr' }
+                ]
+              },
+              {
+                title: 'Research & Support Centers',
+                links: [
+                  { title: 'Center for Infrastructure Research and Services (CIRS)', href: 'http://www.northsouth.edu/academic/seps/cee/cirs.html' },
+                  { title: 'Student Counseling Center (SCC)', href: 'http://www.northsouth.edu/resources/scc.html' },
+                  { title: 'Center for Migration Studies (CMS)', href: 'http://www.northsouth.edu/sipg/cms.html' },
+                  { title: 'Center for Peace Studies (CPS)', href: 'https://www.cpsnsu.org/' }
+                ]
+              },
+            ]
+        },
+        {
+            id: 'Faculty',
+            title: 'Faculty',
+            content: [
+              {
+                title: 'School of Business & Economics',
+                links: [
+                  { title: 'Accounting & Finance', href: '[[~1785~]]' },
+                  { title: 'Economics', href: '[[~181~]]' },
+                  { title: 'Management', href: '[[~1784~]]' },
+                  { title: 'Marketing & International Business', href: '[[~1787~]]' }
+                ]
+              },
+              {
+                title: 'School of Engineering & Physical Sciences',
+                links: [
+                  { title: 'Architecture', href: '[[~177~]]' },
+                  { title: 'Civil and Environmental Engineering', href: '[[~179~]]' },
+                  { title: 'Electrical & Computer Engineering', href: 'http://ece.northsouth.edu/people/type/faculty/' },
+                  { title: 'Mathematics & Physics', href: '[[~1960~]]' }
+                ]
+              },
+              {
+                title: 'School of Humanities & Social Sciences',
+                links: [
+                  { title: 'English & Modern Languages', href: '[[~180~]]' },
+                  { title: 'Political Science & Sociology', href: '[[~182~]]' },
+                  { title: 'Law', href: '[[~2266~]]' },
+                  { title: 'History & Philosophy', href: '[[~2665~]]' }
+                ]
+              },
+              {
+                title: 'School of Health & Life Sciences',
+                links: [
+                  { title: 'Biochemistry & Microbiology', href: '[[~173~]]' },
+                  { title: 'Environmental Science & Management', href: '[[~178~]]' },
+                  { title: 'Pharmaceutical Sciences', href: '[[~175~]]' },
+                  { title: 'Public Health', href: '[[~174~]]' }
+                ]
+              }
+            ]
+          },
+          {
+            id: 'Offices',
+            title: 'Offices',
+            content: [
+              {
+                title: 'General Offices',
+                links: [
+                  { title: 'Registrar\'s Office', href: '[[~8836~]]' },
+                  { title: 'Proctor\'s Office', href: '[[~3148~]]' }
+                ]
+              },
+              {
+                title: 'Administrative Offices',
+                links: [
+                  { title: 'Office of External Affairs', href: '#' },
+                  { title: 'Office of Graduate Studies', href: '[[~2965~]]' },
+                  { title: 'Office of Student Affairs', href: '[[~8041~]]' }
+                ]
+              },
+              {
+                title: 'Support & Initiatives',
+                links: [
+                  { title: 'Financial Aid Office', href: '[[~155~]]' },
+                  { title: 'NSU Startups Next (NSUSN)', href: 'https://nsustartupsnext.com/' }
+                ]
+              }
+            ]
+          },
+          {
+            id: 'Admission',
+            title: 'Admission',
+            content: [
+              {
+                title: 'Admission Information',
+                links: [
+                  { title: 'Admissions Home page', href: 'http://admissions.northsouth.edu/' },
+                  { title: 'Graduate Admission Requirements', href: 'http://admissions.northsouth.edu/graduate_requirement' },
+                  { title: 'Admission of International Applicants', href: 'http://admissions.northsouth.edu/int_student' },
+                  { title: 'Non-degree Students', href: 'http://admissions.northsouth.edu/transfer' }
+                ]
+              },
+              {
+                title: 'Cost and Financial Information',
+                links: [
+                  { title: 'Financial Aid', href: '[[~155~]]' },
+                  { title: 'Tuition and Other Fees', href: '[[~158~]]' },
+                  { title: 'Tuition Fee Calculator', href: 'http://admissions.northsouth.edu/tuition' },
+                  { title: 'Frequently Ask Questions', href: 'http://admissions.northsouth.edu/faq' }
+                ]
+              },
+              {
+                title: 'Transfer & Credit',
+                links: [
+                  { title: 'Transfer of Students', href: 'http://admissions.northsouth.edu/transfer' },
+                  { title: 'Credit Transfer', href: 'http://admissions.northsouth.edu/transfer' },
+                  { title: 'UG Admission Test- Sample Question', href: 'http://admissions.northsouth.edu/ug_download' }
+                ]
+              }
+            ]
+          },
+          {
+            id: 'NSU Online',
+            title: 'NSU Online',
+            content: [
+              {
+                title: 'NSU Online Systems',
+                links: [
+                  { title: 'NSU Online Systems', href: 'http://10.102.11.67/home2025/' },
+                  { title: 'Faculty Portal (RDS)', href: 'http://portal.northsouth.edu/' },
+                  { title: 'Employee Portal (RDS)', href: 'http://portal.northsouth.edu/' },
+                  { title: 'Student Portal (RDS)', href: 'http://portal.northsouth.edu/' },
+                  { title: 'Parent Portal (RDS)', href: 'https://rds3.northsouth.edu/index.php/welcome/parent_login' },
+                  { title: 'Online Admission', href: 'http://apply.northsouth.edu:8080/admissionWeb/login.view' },
+                  { title: 'Online Degree Verification', href: 'https://rds3.northsouth.edu/index.php/verification/verification' },
+                  { title: 'Online Job Portal', href: 'https://jobs.northsouth.edu/' }
+                ]
+              },
+              {
+                title: 'Learning Management System (LMS)',
+                links: [
+                  { title: 'Canvas', href: 'http://www.northsouth.edu/canvas/' }
+                ]
+              },
+              {
+                title: 'Faculty: Guidelines (Step by Step)',
+                links: [
+                  { title: 'Faculty: Guidelines (Step by Step)', href: 'http://10.102.11.67/home2025/' },
+                  { title: 'Faculty: Create Google ClassRoom', href: 'https://drive.google.com/open?id=1WUx6Rp-pV0U8OeivNLCXRTUVTTIYueaT' },
+                  { title: 'Faculty: Online Class (Archive, Create new one & Meet Link)', href: '/newassets/images/IT/ArchiveCreateNewClassWithMeetLink.pdf' },
+                  { title: 'Faculty: Create an Assignment for Student', href: '/newassets/images/IT/Faculty-ClassAssignmentManual.pdf' }
+                ]
+              },
+              {
+                title: 'Students & Applicants: Guidelines',
+                links: [
+                  { title: 'Student: Guidelines (Step by Step)', href: 'http://10.102.11.67/home2025/' },
+                  { title: 'Students: Password Recovery Process for RDS', href: '/newassets/images/IT/PasswordRecoveryProcess.pdf' },
+                  { title: 'Students: Online Course Registration', href: 'https://drive.google.com/file/d/0B8X_hvl8uyoIRF9Ud1RRdjNWNjg/view' },
+                  { title: 'Students: Online ClassRoom', href: '/newassets/images/IT/OnlineClassRoom-Students.pdf' },
+                  { title: 'Students: How to submit an assignment', href: '/newassets/images/IT/GooleAssignmentStudentPerspective.pdf' },
+                  { title: 'Students: How to Input NID Through RDS', href: 'http://www.northsouth.edu/assets/cv/RDS-NID-Update.pdf' },
+                  { title: 'Students: Online Degree Analysis', href: 'http://www.northsouth.edu/assets/cv/Degree_Analysis_Guideline%20(2).pdf' },
+                  { title: 'Applicants: Online Enrollment Process', href: '/newassets/images/IT/EnrollmentProcessOnline.pdf' }
+                ]
+              }
+            ]
+          },
+          {
+            id: 'Alumni',
+            title: 'Alumni',
+            content: [
+              {
+                links: [
+                  { title: 'Alumni', href: 'https://alumni.northsouth.edu/landingPage' }
+                ]
+              }
+            ]
+          },
+          {
+            id: 'Research',
+            title: 'Research',
+            content: [
+              {
+                title: 'Research',
+                links: [
+                  { title: 'Research', href: '[[~8062~]]' }
+                ]
+              }
+            ]
+          },
+          {
+            id: 'Useful Links',
+            title: 'Useful Links',
+            content: [
+              {
+                title: 'NSU Inquiry',
+                links: [
+                  { title: 'Inquiry & Feedback', href: '[[~249~]]' },
+                  { title: 'Administrative Directory', href: '[[~7716~]]' },
+                  { title: 'Jobs at NSU', href: 'https://jobs.northsouth.edu/' },
+                  { title: 'Tender Notice', href: '[[~477~]]' },
+                  { title: 'Degree Verification', href: 'https://rds3.northsouth.edu/index.php/verification/verification' },
+                  { title: 'E-Tender', href: 'https://rds3.northsouth.edu/index.php/etender/auth' }
+                ]
+              },
+              {
+                title: 'NSU Services',
+                links: [
+                  { title: 'Services Request Forms', href: '[[~3258~]]' },
+                  { title: 'NSU Facilities', href: '[[~85~]]' },
+                  { title: 'NSU Student Clubs', href: '[[~4199~]]' },
+                  { title: 'PABX Directory', href: '/newassets/images/5-9451.PABX_Directory _3March2023.pdf' },
+                  { title: 'NSU Archive', href: 'http://www.northsouth.edu/archive.html' }
+                ]
+              },
+              {
+                title: 'Offices',
+                links: [
+                  { title: 'Office of External Affairs', href: 'http://institutions.northsouth.edu/oea/' },
+                  { title: 'Office of Graduate Studies', href: '[[~2965~]]' },
+                  { title: 'Proctor\'s Office', href: '[[~3148~]]' },
+                  { title: 'Financial Aid Office', href: '[[~155~]]' },
+                  { title: 'Office of Student Affairs', href: '[[~8041~]]' },
+                  { title: 'NSU Startups Next (NSUSN)', href: 'https://nsustartupsnext.com/' },
+                  { title: 'Registrar\'s Office', href: '[[~8836~]]' }
+                ]
+              },
+              {
+                title: 'Policy, Procedures & Complaints',
+                links: [
+                  { title: 'Complaint Committee', href: '[[~8700~]]' }
+                ]
+              }
+            ]
+          }         
+      ]" :key="section.id">
+        <div class="border rounded-lg overflow-hidden bg-white shadow-lg w-full"> <!-- Added w-full -->
+          <!-- Accordion Header -->
+          <button
+  @click="activeSection = (activeSection === section.id) ? null : section.id; $nextTick(() => { if (activeSection === section.id) $el.scrollIntoView({ behavior: 'smooth', block: 'start' }); })"
+  class="w-full px-6 py-4 flex justify-between items-center hover:bg-gray-50 transition-colors"
+>
+  <span class="text-xl font-semibold text-gray-800" x-text="section.title"></span>
+  <svg class="w-6 h-6 transition-transform duration-300 text-gray-600"
+      :class="activeSection === section.id ? 'rotate-180' : ''"
+      fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+  </svg>
+</button>
+
+          
+          <!-- Accordion Content -->
+          <div
+            x-show="activeSection === section.id"
+            x-collapse.duration.300ms
+            class="bg-gray-50 relative"
+            >
+            <!-- Scrollable Container -->
+            <div class="max-h-[60vh] md:max-h-[70vh] overflow-y-auto pb-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 p-6">
+                <template x-for="column in section.content" :key="column.title">
+                    <div class="space-y-3">
+                    <h4 class="text-base font-semibold text-gray-800 pb-2 border-b border-gray-300" x-text="column.title"></h4>
+                    <div class="space-y-2">
+                        <template x-for="(link, index) in column.links" :key="link.href + index">
+                        <a :href="link.href" 
+                            class="block text-sm text-gray-600 hover:text-indigo-600 transition-colors py-1"
+                            x-text="link.title"></a>
+                        </template>
+                    </div>
+                    </div>
+                </template>
+                </div>
+                <!-- Scroll indicator fade -->
+                <div class="sticky bottom-0 h-8 bg-gradient-to-t from-gray-50 to-transparent pointer-events-none"></div>
+            </div>
+            </div>
+
+        </div>
+      </template>
+    </div>
+  </div>  
+  </div>
+</div>
+
+<!-- Comments on z-index stacking order -->
+<!--
+z-index values (from top to bottom):
+- Hamburger/Close Button: z-50 (always on top)
+- Overlay Menu: z-40 (fullscreen overlay, below button but above header)
+- Header (logo, text, etc.): z-30 (below overlay, above main content)
+- Content Wrapper (inside overlay): z-10 (just above gradient, inside overlay)
+- Gradient Background Layer: z-0 (base layer inside overlay)
+- Logo Image (inside overlay): z-0 (base layer inside overlay)
+- Main Page Content: z-auto/0 (below all overlays and headers)
+-->
+</body>
+</html>
