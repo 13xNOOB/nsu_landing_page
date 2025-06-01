@@ -5,7 +5,7 @@ document.addEventListener('alpine:init', () => {
         play: true,
         slides: [
             {type: 'video', src: '/assets/top_slider_assets/campus_tour.mp4'},
-            {type: 'image', src: '/assets/top_slider_assets/campus.webp'}
+            {type: 'image', src: '/assets/top_slider_assets/campus.jpg'}
         ],
         next() {
             this.currentSlide = (this.currentSlide + 1) % this.slides.length;
@@ -24,6 +24,13 @@ document.addEventListener('alpine:init', () => {
             this.$refs.videoEl?.pause();
         },
         init() {
+            // Auto-slide every 10 seconds (10000ms)
+            setInterval(() => {
+                if (this.play) { // Only auto-slide if not paused
+                this.next();
+                }
+            }, 10000);
+            
             this.$watch('currentSlide', () => {
                 if (this.play && this.slides[this.currentSlide]?.type === 'video') {
                     this.$refs.videoEl?.play();
@@ -31,8 +38,227 @@ document.addEventListener('alpine:init', () => {
             });
         }
     }));
+    Alpine.data('newsSection', () => ({
+    currentDateRange: 'Jun 1 - Aug 31, 2025',
+    categories: {
+      newStudents: [],
+      currentStudents: [],
+      community: []
+    },
+    
+    eventTitles: {
+      newStudents: [
+        'New Student Orientation',
+        'Campus Tour & Registration',
+        'Academic Advising Session',
+        'Welcome Week Activities',
+        'Library Orientation',
+        'Student ID Card Distribution',
+        'Dormitory Check-in',
+        'Course Registration Workshop'
+      ],
+      currentStudents: [
+        'Mid-term Examinations',
+        'Study Group Session',
+        'Career Fair',
+        'Mental Health Support Group',
+        'Academic Workshop',
+        'Research Presentation',
+        'Student Council Meeting',
+        'Scholarship Information Session'
+      ],
+      community: [
+        'Community Garden Workshop',
+        'Environmental Awareness Program',
+        'Cultural Festival',
+        'Blood Donation Drive',
+        'Community Service Project',
+        'Local Business Partnership',
+        'Alumni Networking Event',
+        'Public Health Seminar'
+      ]
+    },
+    
+    eventColors: [
+      'text-blue-600',
+      'text-purple-600', 
+      'text-green-600',
+      'text-red-600',
+      'text-orange-600',
+      'text-indigo-600',
+      'text-pink-600'
+    ],
+    
+    generateRandomData() {
+      Object.keys(this.categories).forEach(category => {
+        this.categories[category] = [];
+        const eventCount = Math.floor(Math.random() * 6) + 3; // 3-8 events
+        
+        for (let i = 0; i < eventCount; i++) {
+          this.addRandomEvent(category, false);
+        }
+      });
+    },
+    
+    addRandomEvent(category, single = true) {
+      const titles = this.eventTitles[category];
+      const title = titles[Math.floor(Math.random() * titles.length)];
+      const color = this.eventColors[Math.floor(Math.random() * this.eventColors.length)];
+      
+      // Generate random date in June-August 2025
+      const startDate = new Date(2025, 5, 1); // June 1, 2025
+      const endDate = new Date(2025, 7, 31); // August 31, 2025
+      const randomTime = startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime());
+      const randomDate = new Date(randomTime);
+      
+      // Format date
+      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const formattedDate = `${days[randomDate.getDay()]} ${months[randomDate.getMonth()]} ${randomDate.getDate()}`;
+      
+      // Generate random time
+      const hours = Math.floor(Math.random() * 12) + 1;
+      const minutes = Math.random() < 0.5 ? '00' : '30';
+      const ampm = Math.random() < 0.5 ? 'am' : 'pm';
+      const endHours = hours + Math.floor(Math.random() * 3) + 1;
+      const time = `${hours}:${minutes}${ampm} - ${endHours}:${minutes}${ampm}`;
+      
+      const event = {
+        id: Date.now() + Math.random(),
+        date: formattedDate,
+        time: time,
+        title: title,
+        color: color
+      };
+      
+      if (single) {
+        this.categories[category].push(event);
+      } else {
+        this.categories[category].push(event);
+      }
+      
+      // Sort events by date
+      this.categories[category].sort((a, b) => new Date(a.date) - new Date(b.date));
+    },
+    
+    clearAllData() {
+      Object.keys(this.categories).forEach(category => {
+        this.categories[category] = [];
+      });
+    },
+    
+    previousMonth(category) {
+      // Placeholder for month navigation
+      console.log(`Previous month for ${category}`);
+    },
+    
+    nextMonth(category) {
+      // Placeholder for month navigation  
+      console.log(`Next month for ${category}`);
+    },
+    
+    init() {
+      // Load some initial sample data
+      this.generateRandomData();
+    }
+  }));
+//   News Stories
+Alpine.data('newsStoriesSection', () => ({
+    showControls: false,
+    stories: [],
+    
+    sampleStories: [
+      {
+        id: 1,
+        title: "Enterprise State names new Performing Arts Center",
+        image: "/assets/news_stories_assets/campus-building.jpg",
+        date: "May 28, 2025",
+        category: "Campus News"
+      },
+      {
+        id: 2,
+        title: "ESCC hires Goodson to serve as PAC Director", 
+        image: "/assets/news_stories_assets/director-portrait.jpg",
+        date: "May 25, 2025",
+        category: "Faculty News"
+      },
+      {
+        id: 3,
+        title: "ESCC made $111.6 million economic impact for FY 23-24",
+        image: "/assets/news_stories_assets/campus-building.jpg", 
+        date: "May 22, 2025",
+        category: "Economic Impact"
+      },
+      {  // Added 4th sample story
+        id: 4, 
+        title: "New Student Innovation Center Opens Doors",
+        image: "/assets/news_stories_assets/director-portrait.jpg",
+        date: "May 20, 2025",
+        category: "Campus Development"
+      }
+    ],
+    
+    additionalStories: [
+      {
+        id: 5,
+        title: "Students Excel in National Science Competition",
+        image: "/assets/news_stories_assets/science-lab.jpg",
+        date: "May 18, 2025", 
+        category: "Student Achievement"
+      },
+      {
+        id: 6,
+        title: "New Scholarship Program Launched for Rural Students",
+        image: "/assets/news_stories_assets/scholarship.jpg",
+        date: "May 15, 2025",
+        category: "Financial Aid"
+      },
+      {
+        id: 7,
+        title: "Alumni Donation Funds Technology Upgrades",
+        image: "/assets/news_stories_assets/tech-lab.jpg",
+        date: "May 12, 2025",
+        category: "Alumni News"
+      },
+      {  // Added 4th additional story
+        id: 8,
+        title: "University Partners with Local Industries",
+        image: "/assets/news_stories_assets/partnership.jpg",
+        date: "May 10, 2025",
+        category: "Community Engagement"
+      }
+    ],
+
+    generateSampleStories() {
+      this.stories = [...this.sampleStories];
+    },
+
+    loadMoreStories() {
+      const newStories = this.additionalStories.map(story => ({
+        ...story,
+        id: story.id + this.stories.length
+      }));
+      this.stories = [...this.stories, ...newStories];
+    },
+
+    clearStories() {
+      this.stories = [];
+    },
+
+    init() {
+      this.generateSampleStories();
+    }
+  }));
+  Alpine.data('footerData', () => ({
+    currentYear: new Date().getFullYear(),
+    socialLinks: [
+      { name: 'Facebook', icon: 'fab fa-facebook-f', url: 'https://facebook.com/nsu' },
+      { name: 'Twitter', icon: 'fab fa-twitter', url: 'https://twitter.com/nsu' },
+      { name: 'YouTube', icon: 'fab fa-youtube', url: 'https://youtube.com/nsu' },
+      { name: 'LinkedIn', icon: 'fab fa-linkedin-in', url: 'https://linkedin.com/school/nsu' },
+      { name: 'Instagram', icon: 'fab fa-instagram', url: 'https://instagram.com/nsu' }
+    ]
+  }));
 });
-
-
 </script>
   

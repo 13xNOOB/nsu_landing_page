@@ -1,0 +1,79 @@
+<section class="ns-stories-section relative py-12 md:py-16 px-4" 
+         x-data="newsStoriesSection"
+         style="background: url('/assets/news_stories_assets/news-bg.png') center/cover; background-attachment: fixed;">
+  
+    <!-- Background overlay -->
+    <!-- <div class="absolute inset-0 bg-[#2563EB]/30 z-0"></div> -->
+    <div class="absolute inset-0 bg-[#0b0b45]/50 z-0"></div> <!-- Base dark layer -->
+    <div class="absolute inset-0 bg-gradient-to-b from-[#2563EB]/50 to-transparent z-0"></div> <!-- Blue top gradient -->
+  
+  <div class="ns-stories-container max-w-6xl mx-auto relative z-10">
+    <!-- Header -->
+    <div class="text-center mb-8 md:mb-12">
+      <h2 class="ns-stories-title text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 tracking-wide">
+        NEWS & STUDENT STORIES
+      </h2>
+      <div class="w-32 md:w-40 h-1 bg-[#2563EB] mx-auto mb-6"></div>
+    </div>
+
+    <!-- Updated News Cards Grid - 4 columns -->
+    <div class="ns-stories-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8 md:mb-12">
+      
+      <template x-for="(story, index) in stories" :key="story.id">
+        <article class="ns-story-card group relative bg-white rounded-lg overflow-hidden shadow-lg transition-all duration-300 cursor-pointer h-[400px] md:h-[500px] lg:h-[550px]">
+          <!-- Background Image -->
+          <div class="absolute inset-0">
+            <img :src="story.image" 
+                 :alt="story.title" 
+                 class="w-full h-full object-cover">
+            <!-- Dark Gradient Overlay for text readability -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+            <!-- Blue Hover Overlay -->
+            <div class="absolute inset-0 bg-[#2563EB]/0 group-hover:bg-[#2563EB]/30 transition-all duration-300"></div>
+          </div>
+          
+          <!-- Content -->
+          <div class="relative z-10 h-full flex flex-col justify-end p-4 md:p-6">
+            <h3 class="ns-story-title text-white text-lg md:text-xl lg:text-2xl font-bold mb-3 md:mb-4 line-clamp-3 group-hover:text-white transition-colors duration-300" 
+                x-text="story.title"></h3>
+            
+            <div class="ns-story-cta">
+              <span class="inline-block text-[#4F46E5] bg-white/90 px-3 py-1 rounded text-sm font-semibold uppercase tracking-wider group-hover:bg-white group-hover:text-[#1E3A8A] transition-all duration-300">
+                READ ARTICLE
+              </span>
+            </div>
+          </div>
+        </article>
+      </template>
+
+    </div>
+
+    <!-- More News Button -->
+    <div class="text-center">
+      <button @click="loadMoreStories()" 
+              class="ns-more-btn relative bg-[#2563EB] text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-[#1E3A8A] transition-all duration-300 shadow-lg hover:shadow-xl overflow-hidden group">
+        <!-- Button hover overlay -->
+        <div class="absolute inset-0 bg-[#4F46E5]/0 group-hover:bg-[#4F46E5]/20 transition-all duration-300"></div>
+        <span class="relative z-10">MORE NEWS & STORIES</span>
+      </button>
+    </div>
+
+    <!-- Admin Controls (for demo) -->
+    <div class="mt-8 text-center space-x-4" x-show="showControls">
+      <button @click="generateSampleStories()" 
+              class="bg-[#2563EB] text-white px-4 py-2 rounded text-sm hover:bg-[#1E3A8A] transition-colors">
+        Generate Sample Stories
+      </button>
+      <button @click="clearStories()" 
+              class="bg-red-500 text-white px-4 py-2 rounded text-sm hover:bg-red-600 transition-colors">
+        Clear Stories
+      </button>
+    </div>
+    
+    <!-- Toggle Controls Button -->
+    <button @click="showControls = !showControls" 
+            class="fixed bottom-4 right-4 bg-gray-600 text-white p-2 rounded-full text-xs hover:bg-gray-700 transition-colors z-50">
+      ⚙️
+    </button>
+  </div>
+</section>

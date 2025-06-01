@@ -1,0 +1,71 @@
+<footer class="relative bg-no-repeat bg-center bg-cover" style="background-image: url('/assets/footer-bg.png');">
+    <!-- Overlays -->
+    <div class="absolute inset-0 bg-[#0b0b45]/50 z-0"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-[#2563EB]/50 to-transparent z-0"></div>
+
+    <!-- Content -->
+    <div class="relative z-10 px-4 py-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 bg-white/90 rounded-lg shadow-lg">
+      
+      <!-- Column 1 -->
+      <div>
+        <h2 class="text-lg font-semibold text-[#1E3A8A] mb-4">About Us</h2>
+        <p class="text-gray-600 text-sm">We are a passionate team dedicated to transforming your digital presence.</p>
+      </div>
+
+      <!-- Column 2 -->
+      <div x-data="{ open: false }">
+        <div class="md:hidden flex justify-between items-center cursor-pointer" @click="open = !open">
+          <span class="text-lg font-semibold text-[#1E3A8A]">Services</span>
+          <i class="fas" :class="open ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+        </div>
+        <ul class="space-y-2 text-gray-600 mt-2 md:mt-0" :class="{ 'hidden': !open }" class="md:block">
+          <li><a href="#" class="hover:text-[#2563EB]">Web Design</a></li>
+          <li><a href="#" class="hover:text-[#2563EB]">Development</a></li>
+          <li><a href="#" class="hover:text-[#2563EB]">Branding</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3 -->
+      <div x-data="{ open: false }">
+        <div class="md:hidden flex justify-between items-center cursor-pointer" @click="open = !open">
+          <span class="text-lg font-semibold text-[#1E3A8A]">Contact</span>
+          <i class="fas" :class="open ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+        </div>
+        <ul class="space-y-2 text-gray-600 mt-2 md:mt-0" :class="{ 'hidden': !open }" class="md:block">
+          <li>support@example.com</li>
+          <li>(123) 456-7890</li>
+        </ul>
+      </div>
+
+      <!-- Column 4 -->
+      <div x-data="{ open: false }">
+        <div class="md:hidden flex justify-between items-center cursor-pointer" @click="open = !open">
+          <span class="text-lg font-semibold text-[#1E3A8A]">Social</span>
+          <i class="fas" :class="open ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+        </div>
+        <ul class="space-y-2 text-gray-600 mt-2 md:mt-0" :class="{ 'hidden': !open }" class="md:block">
+          <li><a href="#" class="hover:text-[#2563EB]">Twitter</a></li>
+          <li><a href="#" class="hover:text-[#2563EB]">LinkedIn</a></li>
+          <li><a href="#" class="hover:text-[#2563EB]">GitHub</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 5 -->
+      <div x-data="{ open: false }">
+        <div class="md:hidden flex justify-between items-center cursor-pointer" @click="open = !open">
+          <span class="text-lg font-semibold text-[#1E3A8A]">Our Location</span>
+          <i class="fas" :class="open ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+        </div>
+        <div :class="{ 'hidden': !open }" class="md:block mt-2 md:mt-0">
+          <div class="w-full h-40 bg-gray-200 rounded-lg flex items-center justify-center">
+            <i class="fas fa-map-marker-alt text-[#4F46E5] text-2xl"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="bg-white border-t border-gray-200 py-6 text-center text-sm text-gray-500 mt-10 relative z-10">
+      &copy; 2025 Your Company. All rights reserved.
+    </div>
+  </footer>

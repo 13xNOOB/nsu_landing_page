@@ -1,4 +1,5 @@
 <style>
+/* For header and overlay */
   @media (max-height: 640px) {
     .max-h-\[60vh\] {
       max-height: 60vh;
@@ -12,7 +13,6 @@
   body {
     overflow-x: hidden;
   }
-
   .animated-gradient {
     background: linear-gradient(-45deg, #8b5cf6, #ec4899, #ef4444);
     background-size: 300% 300%;
@@ -26,6 +26,8 @@
     -ms-overflow-style: none;  /* IE/Edge */
     scrollbar-width: none;  /* Firefox */
   }
+
+/* For top video slider */
   
   .top_video_slider {
     height: calc(100vh - 4rem);
@@ -56,22 +58,22 @@
     transition: transform 0.3s;
   }
 
-.top_video_slider__slide video,
-.top_video_slider__slide img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0.5rem;
-  z-index: -1;
-  max-width: 100vw;
-  max-height: 100%;
-  /* Prevent accidental overflow */
-  overflow: hidden;
-  display: block;
-}
+  .top_video_slider__slide video,
+  .top_video_slider__slide img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    z-index: -1;
+    max-width: 100vw;
+    max-height: 100%;
+    /* Prevent accidental overflow */
+    overflow: hidden;
+    display: block;
+  }
   
   .top_video_slider > div > div.absolute.inset-0 > button {
     width: 3rem;
@@ -87,70 +89,411 @@
   .top_video_slider > div > div.absolute.inset-0 > button:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   }
-</style>
+/* For Quick Links Section */
+  .quick-links-section {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+  }
+  .quick-links-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    background-color: rgba(231, 234, 247, 0.936);
+    padding: 10px 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    max-width: 90%;
+    margin: 20px auto;
+  }
+  .quick-links-item {
+    text-align: center;
+    color: #4F46E5;
+    font-weight: 600;
+    transition: transform 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 120px;
+    background: white;
+    /* Glow effect (initially subtle, grows on hover) */
+    box-shadow:
+      0 0 0 2px rgba(59, 130, 246, 0.1),
+      0 0 10px 4px rgba(59, 130, 246, 0.15),
+      0 0 20px 10px rgba(59, 130, 246, 0.07);
+  }
+  .quick-links-item:hover {
+    transform: translateY(-5px);
+    color: #3B82F6;
+    /* Stronger glow on hover */
+    box-shadow:
+      0 0 0 3px rgba(59, 130, 246, 0.2),
+      0 0 20px 8px rgba(59, 130, 246, 0.25),
+      0 0 40px 20px rgba(59, 130, 246, 0.1);
+  }
+  .quick-links-item i {
+    font-size: 36px;
+    display: block;
+    margin-bottom: 10px;
+    color: #1E3A8A;
+    transition: color 0.3s ease;
+  }
+  .quick-links-item a {
+    text-decoration: none;
+    font-size: 16px;
+    color: #1E3A8A;
+    transition: color 0.3s ease;
+  }
+  .quick-links-item:hover i,
+  .quick-links-item:hover a {
+    color: #3B82F6;
+  }
+  @media (min-width: 768px) {
+    .quick-links-container {
+      gap: 50px;
+    }
+    .quick-links-item i {
+      font-size: 42px;
+    }
+  }
+
+/* Achievements andd accreditations */
+/* Custom property for animation */
+  @property --aa-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  .aa-section {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+  }
+
+  .aa-card-wrapper {
+    position: relative;
+    border-radius: 1rem;
+    padding: 3px;
+    background: conic-gradient(
+      from var(--aa-angle),
+      #ff006e,
+      #8338ec,
+      #3a86ff,
+      #06ffa5,
+      #ffbe0b,
+      #ff006e
+    );
+    animation: aa-border-spin 3s linear infinite;
+  }
+
+  .aa-card {
+    position: relative;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 24px rgba(37,99,235,0.10);
+    z-index: 2;
+  }
+
+  @keyframes aa-border-spin {
+    to {
+      --aa-angle: 360deg;
+    }
+  }
+
+  /* Uniform logo sizing - no hover effects */
+  .aa-accreditation-logo {
+    width: 90px;
+    height: 50px;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .aa-ranking-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .aa-rank-number {
+    font-size: 1.1rem;
+  }
+
+  .aa-rank-text {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 768px) {
+    .aa-rank-text {
+      font-size: 1.1rem;
+    }
+  }
+/* News Section */
+.ns-section {
+  font-family: 'Barlow Semi Condensed', sans-serif;
+  min-height: 100vh;
+}
+
+/* Mobile-first responsive cards */
+.ns-cards-container {
+  width: 100%;
+}
+
+.ns-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  min-height: 300px;
+}
+
+/* Mobile: Stack cards vertically */
+@media (max-width: 767px) {
+  .ns-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
   
-<!-- <style>
-  @media (max-height: 640px) {
-      .max-h-\[60vh\] {
-          max-height: 60vh;
-      }
-      }
-
-@keyframes gradient-move {
-0%, 100% { background-position: 0% 50%; }
-50% { background-position: 100% 50%; }
-}
-.animated-gradient {
-background: linear-gradient(-45deg, #8b5cf6, #ec4899, #ef4444);
-background-size: 300% 300%;
-animation: gradient-move 10s ease infinite;
-}
-/* Hide scrollbar but keep scrolling */
-.scrollbar-hidden::-webkit-scrollbar {
-  display: none;
-}
-.scrollbar-hidden {
-  -ms-overflow-style: none;  /* IE/Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-.top_video_slider {
-  height: calc(100vh - 4rem);
+  .ns-card {
+    width: 100%;
+    max-width: none;
+  }
 }
 
-.top_video_slider__control {
-  width: 3rem;
-  height: 3rem;
-  font-size: 1.25rem;
+/* Tablet and up: Hover effects */
+@media (min-width: 768px) {
+  .ns-cards-container:hover .ns-card {
+    filter: blur(2px);
+    opacity: 0.8;
+    transform: scale(0.97);
+  }
+  
+  .ns-cards-container:hover .ns-card:hover {
+    filter: blur(0);
+    opacity: 1;
+    transform: scale(1.02) translateY(-8px);
+    box-shadow: 0 20px 40px rgba(30, 58, 138, 0.3);
+    z-index: 10;
+    position: relative;
+  }
+}
+
+/* Custom scrollbar for webkit browsers */
+.ns-card-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ns-card-body::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.ns-card-body::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.ns-card-body::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Event hover effects */
+.ns-event {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.ns-calendar-nav button {
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-size: 18px;
+  font-weight: bold;
 }
 
-.top_video_slider__control:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+.ns-calendar-nav button:hover {
+  background-color: rgba(30, 58, 138, 0.1);
+  transform: scale(1.1);
 }
 
-.top_video_slider__slide video,
-.top_video_slider__slide img {
-  border-radius: 0.5rem;
+/* Responsive typography */
+@media (max-width: 640px) {
+  .ns-main-title {
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
 }
 
-.top_video_slider > div > div.absolute.inset-0 > button {
-  width: 3rem;
-  height: 3rem;
-  font-size: 1.5rem;
-  border-radius: 9999px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+@media (min-width: 1024px) {
+  .ns-cards-container {
+    max-width: none;
+  }
+  
+  .ns-card {
+    min-height: 400px;
+  }
 }
+/* News Stories */
+ .ns-stories-section {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    min-height: 100vh;
+  }
 
-.top_video_slider > div > div.absolute.inset-0 > button:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-}
+  .ns-story-card {
+    position: relative;
+    overflow: hidden;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
 
-</style> -->
+  .ns-story-card:hover {
+    border-color: #2563EB;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(37, 99, 235, 0.2);
+  }
+
+  /* Line clamp utility for title truncation */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+  }
+
+  /* Mobile-first responsive adjustments */
+  @media (max-width: 768px) {
+    .ns-stories-grid {
+      gap: 1rem;
+    }
+    
+    .ns-story-card {
+      height: 350px;
+    }
+    
+    .ns-story-title {
+      font-size: 1.125rem;
+      line-height: 1.3;
+      margin-bottom: 0.75rem;
+    }
+    
+    .ns-story-cta span {
+      font-size: 0.75rem;
+      padding: 0.5rem 0.75rem;
+    }
+    
+    .ns-more-btn {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+    }
+  }
+
+  /* Tablet adjustments */
+  @media (min-width: 769px) and (max-width: 1023px) {
+    .ns-story-card {
+      height: 450px;
+    }
+    
+    .ns-story-title {
+      font-size: 1.25rem;
+    }
+  }
+
+  /* Desktop hover effects */
+  @media (min-width: 1024px) {
+    .ns-stories-grid:hover .ns-story-card:not(:hover) {
+      opacity: 0.7;
+      transform: scale(0.98);
+    }
+    
+    .ns-story-card {
+      height: 500px; /* Reduced height for 4-column layout */
+    }
+
+    /* Adjust grid gaps for 4 columns */
+    .ns-stories-grid {
+      gap: 1.5rem;
+    }
+  }
+
+  /* Button hover animation */
+  .ns-more-btn:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Smooth transitions for all interactive elements */
+  .ns-story-card,
+  .ns-story-card img,
+  .ns-story-title,
+  .ns-story-cta span,
+  .ns-more-btn {
+    transition: all 0.3s ease;
+  }
+
+  /* Focus states for accessibility */
+  .ns-story-card:focus,
+  .ns-more-btn:focus {
+    outline: 2px solid #4F46E5;
+    outline-offset: 2px;
+  }
+
+  /* Custom scrollbar for webkit browsers */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #2563EB;
+    border-radius: 4px;
+  }
+
+/* Degree Part */
+/* Additional styling for the section */
+  .degree-section {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+  }
+  /* Optional: add hover effects or transitions globally if needed */
+
+/* Footer */
+      .footer_asad-section {
+        @apply relative bg-no-repeat bg-center bg-cover h-auto;
+      }
+
+      .footer_asad-main {
+        @apply bg-white py-10 px-4;
+      }
+
+      .footer_asad-heading {
+        @apply text-lg font-semibold text-[#1E3A8A] mb-4;
+      }
+
+      .footer_asad-links a {
+        @apply text-gray-600 hover:text-[#2563EB] transition-colors;
+      }
+
+      .footer_asad-map {
+        @apply w-full h-40 rounded-lg bg-gray-200 flex items-center justify-center;
+      }
+
+      .footer_asad-bottom {
+        @apply bg-white border-t border-gray-200 py-6 text-center text-sm text-gray-500;
+      }
+
+      .footer_asad-toggle {
+        @apply md:hidden flex justify-between items-center w-full cursor-pointer;
+      }
+
+      .footer_asad-collapse {
+        @apply md:block hidden;
+      }
+</style>

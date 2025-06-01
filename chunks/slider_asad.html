@@ -1,7 +1,7 @@
 <div class="top_video_slider relative overflow-hidden h-[calc(100vh-8rem)]" x-data="topVideoSlider">
     <div class="relative h-full w-full">
         <template x-for="(slide, index) in slides" :key="index">
-            <div class="top_video_slider__slide absolute inset-0 transition-transform duration-300"
+            <div class="top_video_slider__slide absolute inset-0 transition-transform duration-10"
                  :class="{ 'translate-x-0': currentSlide === index, 'translate-x-full': currentSlide !== index }">
                 
                 <template x-if="slide.type === 'video'">
