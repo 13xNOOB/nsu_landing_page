@@ -1,0 +1,38 @@
+<script>
+document.addEventListener('alpine:init', () => {
+    Alpine.data('topVideoSlider', () => ({
+        currentSlide: 0,
+        play: true,
+        slides: [
+            {type: 'video', src: '/assets/top_slider_assets/campus_tour.mp4'},
+            {type: 'image', src: '/assets/top_slider_assets/campus.webp'}
+        ],
+        next() {
+            this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+        },
+        prev() {
+            this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+        },
+        playVideo() {
+            this.play = true;
+            if (this.slides[this.currentSlide]?.type === 'video') {
+                this.$refs.videoEl?.play();
+            }
+        },
+        pauseVideo() {
+            this.play = false;
+            this.$refs.videoEl?.pause();
+        },
+        init() {
+            this.$watch('currentSlide', () => {
+                if (this.play && this.slides[this.currentSlide]?.type === 'video') {
+                    this.$refs.videoEl?.play();
+                }
+            });
+        }
+    }));
+});
+
+
+</script>
+  

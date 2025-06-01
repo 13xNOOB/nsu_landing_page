@@ -1,0 +1,56 @@
+<div class="top_video_slider relative overflow-hidden h-[calc(100vh-8rem)]" x-data="topVideoSlider">
+    <div class="relative h-full w-full">
+        <template x-for="(slide, index) in slides" :key="index">
+            <div class="top_video_slider__slide absolute inset-0 transition-transform duration-300"
+                 :class="{ 'translate-x-0': currentSlide === index, 'translate-x-full': currentSlide !== index }">
+                
+                <template x-if="slide.type === 'video'">
+                    <video x-ref="videoEl" 
+                           :autoplay="play" 
+                           loop 
+                           muted 
+                           class="w-full h-full object-cover -z-[1]"
+                           :class="{ 'opacity-100': currentSlide === index, 'opacity-0': currentSlide !== index }">
+                        <source :src="slide.src" type="video/mp4">
+                    </video>
+                </template>
+                
+                <template x-if="slide.type === 'image'">
+                    <img :src="slide.src" 
+                         class="w-full h-full object-cover -z-[1]"
+                         :class="{ 'opacity-100': currentSlide === index, 'opacity-0': currentSlide !== index }">
+                </template>
+            </div>
+        </template>
+
+        <div class="absolute inset-0 flex items-center justify-between px-4">
+            <button @click="prev()" 
+                    class="bg-white/30 backdrop-blur-sm text-gray-800 hover:bg-white/50 transition-colors">
+                ←
+            </button>
+            <button @click="next()" 
+                    class="bg-white/30 backdrop-blur-sm text-gray-800 hover:bg-white/50 transition-colors">
+                →
+            </button>
+        </div>
+
+        <template x-if="slides[currentSlide]?.type === 'video'">
+            <div class="absolute bottom-4 right-4 flex gap-2 z-10">
+                <button @click="playVideo()" 
+                        class="top_video_slider__control bg-white/80 backdrop-blur-sm rounded-full"
+                        :class="{ 'bg-blue-500': play, 'text-white': play, 'text-blue-500': !play, 'hover:bg-blue-600': play }">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                        <path fill-rule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.285L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+                <button @click="pauseVideo()" 
+                        class="top_video_slider__control bg-white/80 backdrop-blur-sm rounded-full"
+                        :class="{ 'bg-blue-500': !play, 'text-white': !play, 'text-blue-500': play, 'hover:bg-blue-600': !play }">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                        <path fill-rule="evenodd" d="M6.75 5.25a.75.75 0 01.75-.75H9a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H7.5a.75.75 0 01-.75-.75V5.25zm7.5 0A.75.75 0 0115 4.5h1.5a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H15a.75.75 0 01-.75-.75V5.25z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+        </template>        
+    </div>
+</div>
