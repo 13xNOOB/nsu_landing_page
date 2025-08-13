@@ -1,71 +1,85 @@
-<footer class="relative bg-no-repeat bg-center bg-cover" style="background-image: url('/assets/footer-bg.png');">
-    <!-- Overlays -->
-    <div class="absolute inset-0 bg-[#0b0b45]/50 z-0"></div>
-    <div class="absolute inset-0 bg-gradient-to-b from-[#2563EB]/50 to-transparent z-0"></div>
-
-    <!-- Content -->
-    <div class="relative z-10 px-4 py-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 bg-white/90 rounded-lg shadow-lg">
-      
-      <!-- Column 1 -->
-      <div>
-        <h2 class="text-lg font-semibold text-[#1E3A8A] mb-4">About Us</h2>
-        <p class="text-gray-600 text-sm">We are a passionate team dedicated to transforming your digital presence.</p>
-      </div>
-
-      <!-- Column 2 -->
-      <div x-data="{ open: false }">
-        <div class="md:hidden flex justify-between items-center cursor-pointer" @click="open = !open">
-          <span class="text-lg font-semibold text-[#1E3A8A]">Services</span>
-          <i class="fas" :class="open ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-        </div>
-        <ul class="space-y-2 text-gray-600 mt-2 md:mt-0" :class="{ 'hidden': !open }" class="md:block">
-          <li><a href="#" class="hover:text-[#2563EB]">Web Design</a></li>
-          <li><a href="#" class="hover:text-[#2563EB]">Development</a></li>
-          <li><a href="#" class="hover:text-[#2563EB]">Branding</a></li>
-        </ul>
-      </div>
-
-      <!-- Column 3 -->
-      <div x-data="{ open: false }">
-        <div class="md:hidden flex justify-between items-center cursor-pointer" @click="open = !open">
-          <span class="text-lg font-semibold text-[#1E3A8A]">Contact</span>
-          <i class="fas" :class="open ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-        </div>
-        <ul class="space-y-2 text-gray-600 mt-2 md:mt-0" :class="{ 'hidden': !open }" class="md:block">
-          <li>support@example.com</li>
-          <li>(123) 456-7890</li>
-        </ul>
-      </div>
-
-      <!-- Column 4 -->
-      <div x-data="{ open: false }">
-        <div class="md:hidden flex justify-between items-center cursor-pointer" @click="open = !open">
-          <span class="text-lg font-semibold text-[#1E3A8A]">Social</span>
-          <i class="fas" :class="open ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-        </div>
-        <ul class="space-y-2 text-gray-600 mt-2 md:mt-0" :class="{ 'hidden': !open }" class="md:block">
-          <li><a href="#" class="hover:text-[#2563EB]">Twitter</a></li>
-          <li><a href="#" class="hover:text-[#2563EB]">LinkedIn</a></li>
-          <li><a href="#" class="hover:text-[#2563EB]">GitHub</a></li>
-        </ul>
-      </div>
-
-      <!-- Column 5 -->
-      <div x-data="{ open: false }">
-        <div class="md:hidden flex justify-between items-center cursor-pointer" @click="open = !open">
-          <span class="text-lg font-semibold text-[#1E3A8A]">Our Location</span>
-          <i class="fas" :class="open ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-        </div>
-        <div :class="{ 'hidden': !open }" class="md:block mt-2 md:mt-0">
-          <div class="w-full h-40 bg-gray-200 rounded-lg flex items-center justify-center">
-            <i class="fas fa-map-marker-alt text-[#4F46E5] text-2xl"></i>
+<footer class="nsu-footer relative bg-transparent">
+  <!-- Background Image and Overlay -->
+  <div class="absolute inset-0">
+    <img src="/assets/footer-bg.png" alt="Footer Background"
+         class="w-full h-full object-cover object-center" />
+    <div class="absolute inset-0 bg-[#0b0b45]/60 backdrop-blur-sm"></div>
+  </div>
+  
+  <!-- Main Content Card -->
+  <div class="relative z-10 max-w-6xl mx-auto px-6 py-10 md:py-14">
+    <div class="bg-white/95 rounded-xl shadow-2xl border border-gray-200 flex flex-col lg:flex-row items-stretch gap-8 p-6 md:p-10">
+      <!-- Info Columns -->
+      <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Contact Us -->
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-gray-900">Contact Us</h3>
+          <div class="text-sm text-gray-700 space-y-2">
+            <div><span class="font-semibold">Address:</span> Bashundhara, Dhaka 1229, Bangladesh</div>
+            <div><span class="font-semibold">Tel:</span> <a href="tel:+880255668200" class="hover:text-blue-700 transition">+880 2-55668200</a></div>
+            <div>
+              <span class="font-semibold">Email:</span>
+              <a href="mailto:info@northsouth.edu" class="text-blue-700 hover:underline">info@northsouth.edu</a>
+            </div>
           </div>
         </div>
+        <!-- About -->
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-gray-900">About</h3>
+          <ul class="space-y-2 text-sm text-gray-700">
+            <li><a href="#" class="hover:text-blue-700 transition">About North South University</a></li>
+            <li><a href="#" class="hover:text-blue-700 transition">Mission and Vision</a></li>
+            <li><a href="#" class="hover:text-blue-700 transition">Leadership</a></li>
+          </ul>
+        </div>
+        <!-- Academics -->
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-gray-900">Academics</h3>
+          <ul class="space-y-2 text-sm text-gray-700">
+            <li><a href="#" class="hover:text-blue-700 transition">Schools & Departments</a></li>
+            <li><a href="#" class="hover:text-blue-700 transition">Programs</a></li>
+            <li><a href="#" class="hover:text-blue-700 transition">Research</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- Map -->
+      <div class="flex-1 flex items-center justify-center">
+        <div class="w-full max-w-xs h-64 rounded-xl overflow-hidden border border-gray-200 shadow-lg bg-white">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3650.0980914516545!2d90.4255566!3d23.815110699999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c64c103a8093%3A0xd660a4f50365294a!2sNorth%20South%20University!5e0!3m2!1sen!2sbd!4v1748789925416!5m2!1sen!2sbd"
+            width="100%"
+            height="100%"
+            class="w-full h-full"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
       </div>
     </div>
+  </div>
 
-    <!-- Footer Bottom -->
-    <div class="bg-white border-t border-gray-200 py-6 text-center text-sm text-gray-500 mt-10 relative z-10">
-      &copy; 2025 Your Company. All rights reserved.
+  <!-- Footer Bottom (Updated for full width and image-like layout) -->
+    <div class="w-full bg-[#F6F7FA] border-t border-gray-200 pt-8 pb-6 relative z-30">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <!-- Left: Logo, copyright, privacy -->
+        <div class="flex flex-col md:flex-row md:items-center gap-4">
+        <img src="/assets/nsu-logo.png" alt="North South University" class="h-20 w-auto mx-auto md:mx-0" />
+        <span class="text-gray-500 text-sm text-center md:text-left">
+            © 2025 North South University. All rights reserved.
+        </span>
+        <a href="#" class="text-gray-400 text-sm hover:text-blue-700 text-center md:text-left md:ml-4">Privacy Policy</a>
+        </div>
+        <!-- Right: Social icons -->
+        <div class="flex items-center justify-center space-x-6">
+        <a href="#" aria-label="Facebook" class="text-gray-400 hover:text-blue-700 text-xl"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="X" class="text-gray-400 hover:text-blue-700 text-xl"><i class="fab fa-x-twitter"></i></a>
+        <a href="#" aria-label="YouTube" class="text-gray-400 hover:text-blue-700 text-xl"><i class="fab fa-youtube"></i></a>
+        <a href="#" aria-label="LinkedIn" class="text-gray-400 hover:text-blue-700 text-xl"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" aria-label="Instagram" class="text-gray-400 hover:text-blue-700 text-xl"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Flickr" class="text-gray-400 hover:text-blue-700 text-xl"><i class="fab fa-flickr"></i></a>
+        </div>
     </div>
-  </footer>
+    </div>
+</footer>

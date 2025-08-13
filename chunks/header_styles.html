@@ -12,12 +12,49 @@
   }
   body {
     overflow-x: hidden;
+    font-family: 'Barlow Semi Condensed', sans-serif;
   }
   .animated-gradient {
-    background: linear-gradient(-45deg, #8b5cf6, #ec4899, #ef4444);
+    background: linear-gradient(-45deg, #ff692a, #0b0b45, #6a0217, #0095bd);
     background-size: 300% 300%;
     animation: gradient-move 10s ease infinite;
   }
+
+  /* Glow Around NSU logo in overlay */
+  .logo-glow-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    height: 250px;
+  }
+
+  .logo-glow-container img {
+    position: relative;
+    z-index: 10;
+    max-width: 250px;
+    opacity: 0.85;
+    filter: drop-shadow(0 0 20px rgba(255, 105, 42, 0.6))
+            drop-shadow(0 0 40px rgba(11, 11, 69, 0.4))
+            drop-shadow(0 0 60px rgba(106, 2, 23, 0.3));
+    animation: refined-glow 6s ease-in-out infinite alternate;
+  }
+
+  @keyframes refined-glow {
+    0% {
+      filter: drop-shadow(0 0 15px rgba(255, 105, 42, 0.5))
+              drop-shadow(0 0 30px rgba(11, 11, 69, 0.3))
+              drop-shadow(0 0 45px rgba(106, 2, 23, 0.2));
+    }
+    100% {
+      filter: drop-shadow(0 0 25px rgba(255, 105, 42, 0.8))
+              drop-shadow(0 0 50px rgba(11, 11, 69, 0.5))
+              drop-shadow(0 0 75px rgba(106, 2, 23, 0.4));
+    }
+  }
+
+
   /* Hide scrollbar but keep scrolling */
   .scrollbar-hidden::-webkit-scrollbar {
     display: none;
@@ -89,6 +126,7 @@
   .top_video_slider > div > div.absolute.inset-0 > button:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   }
+
 /* For Quick Links Section */
   .quick-links-section {
     font-family: 'Barlow Semi Condensed', sans-serif;
@@ -230,115 +268,116 @@
       font-size: 1.1rem;
     }
   }
+  
 /* News Section */
-.ns-section {
-  font-family: 'Barlow Semi Condensed', sans-serif;
-  min-height: 100vh;
-}
-
-/* Mobile-first responsive cards */
-.ns-cards-container {
-  width: 100%;
-}
-
-.ns-card {
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
-  min-height: 300px;
-}
-
-/* Mobile: Stack cards vertically */
-@media (max-width: 767px) {
-  .ns-cards-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  .ns-section {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    min-height: 100vh;
   }
-  
-  .ns-card {
+
+  /* Mobile-first responsive cards */
+  .ns-cards-container {
     width: 100%;
-    max-width: none;
   }
-}
 
-/* Tablet and up: Hover effects */
-@media (min-width: 768px) {
-  .ns-cards-container:hover .ns-card {
-    filter: blur(2px);
-    opacity: 0.8;
-    transform: scale(0.97);
-  }
-  
-  .ns-cards-container:hover .ns-card:hover {
-    filter: blur(0);
-    opacity: 1;
-    transform: scale(1.02) translateY(-8px);
-    box-shadow: 0 20px 40px rgba(30, 58, 138, 0.3);
-    z-index: 10;
-    position: relative;
-  }
-}
-
-/* Custom scrollbar for webkit browsers */
-.ns-card-body::-webkit-scrollbar {
-  width: 6px;
-}
-
-.ns-card-body::-webkit-scrollbar-track {
-  background: #f1f5f9;
-  border-radius: 3px;
-}
-
-.ns-card-body::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 3px;
-}
-
-.ns-card-body::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
-/* Event hover effects */
-.ns-event {
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-
-.ns-calendar-nav button {
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.ns-calendar-nav button:hover {
-  background-color: rgba(30, 58, 138, 0.1);
-  transform: scale(1.1);
-}
-
-/* Responsive typography */
-@media (max-width: 640px) {
-  .ns-main-title {
-    font-size: 1.5rem;
-    line-height: 1.2;
-  }
-}
-
-@media (min-width: 1024px) {
-  .ns-cards-container {
-    max-width: none;
-  }
-  
   .ns-card {
-    min-height: 400px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    min-height: 300px;
   }
-}
+
+  /* Mobile: Stack cards vertically */
+  @media (max-width: 767px) {
+    .ns-cards-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .ns-card {
+      width: 100%;
+      max-width: none;
+    }
+  }
+
+  /* Tablet and up: Hover effects */
+  @media (min-width: 768px) {
+    .ns-cards-container:hover .ns-card {
+      filter: blur(2px);
+      opacity: 0.8;
+      transform: scale(0.97);
+    }
+    
+    .ns-cards-container:hover .ns-card:hover {
+      filter: blur(0);
+      opacity: 1;
+      transform: scale(1.02) translateY(-8px);
+      box-shadow: 0 20px 40px rgba(30, 58, 138, 0.3);
+      z-index: 10;
+      position: relative;
+    }
+  }
+
+  /* Custom scrollbar for webkit browsers */
+  .ns-card-body::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .ns-card-body::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 3px;
+  }
+
+  .ns-card-body::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+  }
+
+  .ns-card-body::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+
+  /* Event hover effects */
+  .ns-event {
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .ns-calendar-nav button {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .ns-calendar-nav button:hover {
+    background-color: rgba(30, 58, 138, 0.1);
+    transform: scale(1.1);
+  }
+
+  /* Responsive typography */
+  @media (max-width: 640px) {
+    .ns-main-title {
+      font-size: 1.5rem;
+      line-height: 1.2;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .ns-cards-container {
+      max-width: none;
+    }
+    
+    .ns-card {
+      min-height: 400px;
+    }
+  }
 /* News Stories */
  .ns-stories-section {
     font-family: 'Barlow Semi Condensed', sans-serif;

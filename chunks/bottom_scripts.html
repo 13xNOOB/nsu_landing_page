@@ -38,130 +38,186 @@ document.addEventListener('alpine:init', () => {
             });
         }
     }));
-    Alpine.data('newsSection', () => ({
-    currentDateRange: 'Jun 1 - Aug 31, 2025',
-    categories: {
-      newStudents: [],
-      currentStudents: [],
-      community: []
-    },
-    
-    eventTitles: {
-      newStudents: [
-        'New Student Orientation',
-        'Campus Tour & Registration',
-        'Academic Advising Session',
-        'Welcome Week Activities',
-        'Library Orientation',
-        'Student ID Card Distribution',
-        'Dormitory Check-in',
-        'Course Registration Workshop'
+
+// News Section
+
+  Alpine.data('newsSection', () => ({
+      // Student Events Data
+      categories: {
+        newStudents: [],
+        currentStudents: []
+      },
+      eventTitles: {
+        newStudents: [
+          'New Student Orientation',
+          'Campus Tour & Registration',
+          'Academic Advising Session',
+          'Welcome Week Activities',
+          'Library Orientation',
+          'Student ID Card Distribution',
+          'Dormitory Check-in',
+          'Course Registration Workshop'
+        ],
+        currentStudents: [
+          'Mid-term Examinations',
+          'Study Group Session',
+          'Career Fair',
+          'Mental Health Support Group',
+          'Academic Workshop',
+          'Research Presentation',
+          'Student Council Meeting',
+          'Scholarship Information Session'
+        ]
+      },
+      eventColors: [
+        'text-blue-600',
+        'text-purple-600', 
+        'text-green-600',
+        'text-red-600',
+        'text-orange-600',
+        'text-indigo-600',
+        'text-pink-600'
       ],
-      currentStudents: [
-        'Mid-term Examinations',
-        'Study Group Session',
-        'Career Fair',
-        'Mental Health Support Group',
-        'Academic Workshop',
-        'Research Presentation',
-        'Student Council Meeting',
-        'Scholarship Information Session'
+
+      // Calendar Grid Data
+      currentDate: new Date(),
+      currentMonth: 5, // June (0-based)
+      currentYear: 2025,
+      monthNames: [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
       ],
-      community: [
-        'Community Garden Workshop',
-        'Environmental Awareness Program',
-        'Cultural Festival',
-        'Blood Donation Drive',
-        'Community Service Project',
-        'Local Business Partnership',
-        'Alumni Networking Event',
-        'Public Health Seminar'
-      ]
-    },
-    
-    eventColors: [
-      'text-blue-600',
-      'text-purple-600', 
-      'text-green-600',
-      'text-red-600',
-      'text-orange-600',
-      'text-indigo-600',
-      'text-pink-600'
-    ],
-    
-    generateRandomData() {
-      Object.keys(this.categories).forEach(category => {
-        this.categories[category] = [];
-        const eventCount = Math.floor(Math.random() * 6) + 3; // 3-8 events
+      holidays: {
+        '2025-06-14': 'Eid-ul-Fitr (estimated)',
+        '2025-06-21': 'Father\'s Day (unofficial)',
+        '2025-08-15': 'National Mourning Day'
+      },
+
+      // Combined Methods
+      init() {
+        this.generateRandomData();
+      },
+
+      // Student Events Methods
+      generateRandomData() {
+        ['newStudents', 'currentStudents'].forEach(category => {
+          this.categories[category] = [];
+          const eventCount = Math.floor(Math.random() * 6) + 3;
+          for (let i = 0; i < eventCount; i++) {
+            this.addRandomEvent(category, false);
+          }
+        });
+      },
+
+      addRandomEvent(category, single = true) {
+        const titles = this.eventTitles[category];
+        const title = titles[Math.floor(Math.random() * titles.length)];
+        const color = this.eventColors[Math.floor(Math.random() * this.eventColors.length)];
         
-        for (let i = 0; i < eventCount; i++) {
-          this.addRandomEvent(category, false);
+        const startDate = new Date(2025, 5, 1);
+        const endDate = new Date(2025, 7, 31);
+        const randomTime = startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime());
+        const randomDate = new Date(randomTime);
+        
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const formattedDate = `${days[randomDate.getDay()]} ${months[randomDate.getMonth()]} ${randomDate.getDate()}`;
+        
+        const hours = Math.floor(Math.random() * 12) + 1;
+        const minutes = Math.random() < 0.5 ? '00' : '30';
+        const ampm = Math.random() < 0.5 ? 'am' : 'pm';
+        const endHours = hours + Math.floor(Math.random() * 3) + 1;
+        const time = `${hours}:${minutes}${ampm} - ${endHours}:${minutes}${ampm}`;
+        
+        const event = {
+          id: Date.now() + Math.random(),
+          date: formattedDate,
+          time: time,
+          title: title,
+          color: color
+        };
+        
+        this.categories[category].push(event);
+        this.categories[category].sort((a, b) => new Date(a.date) - new Date(b.date));
+      },
+
+      clearAllData() {
+        Object.keys(this.categories).forEach(category => {
+          this.categories[category] = [];
+        });
+      },
+
+      // Calendar Grid Methods
+      get calendarGrid() {
+        const days = [];
+        const firstDay = new Date(this.currentYear, this.currentMonth, 1);
+        const lastDay = new Date(this.currentYear, this.currentMonth + 1, 0);
+        const prevMonthLastDay = new Date(this.currentYear, this.currentMonth, 0);
+        
+        // Previous month days
+        for (let i = firstDay.getDay() - 1; i >= 0; i--) {
+          days.push({
+            day: prevMonthLastDay.getDate() - i,
+            date: new Date(this.currentYear, this.currentMonth - 1, prevMonthLastDay.getDate() - i),
+            isCurrentMonth: false
+          });
         }
-      });
-    },
-    
-    addRandomEvent(category, single = true) {
-      const titles = this.eventTitles[category];
-      const title = titles[Math.floor(Math.random() * titles.length)];
-      const color = this.eventColors[Math.floor(Math.random() * this.eventColors.length)];
-      
-      // Generate random date in June-August 2025
-      const startDate = new Date(2025, 5, 1); // June 1, 2025
-      const endDate = new Date(2025, 7, 31); // August 31, 2025
-      const randomTime = startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime());
-      const randomDate = new Date(randomTime);
-      
-      // Format date
-      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      const formattedDate = `${days[randomDate.getDay()]} ${months[randomDate.getMonth()]} ${randomDate.getDate()}`;
-      
-      // Generate random time
-      const hours = Math.floor(Math.random() * 12) + 1;
-      const minutes = Math.random() < 0.5 ? '00' : '30';
-      const ampm = Math.random() < 0.5 ? 'am' : 'pm';
-      const endHours = hours + Math.floor(Math.random() * 3) + 1;
-      const time = `${hours}:${minutes}${ampm} - ${endHours}:${minutes}${ampm}`;
-      
-      const event = {
-        id: Date.now() + Math.random(),
-        date: formattedDate,
-        time: time,
-        title: title,
-        color: color
-      };
-      
-      if (single) {
-        this.categories[category].push(event);
-      } else {
-        this.categories[category].push(event);
+
+        // Current month days
+        for (let i = 1; i <= lastDay.getDate(); i++) {
+          days.push({
+            day: i,
+            date: new Date(this.currentYear, this.currentMonth, i),
+            isCurrentMonth: true
+          });
+        }
+
+        // Next month days
+        const nextMonthDays = 7 - lastDay.getDay() - 1;
+        for (let i = 1; i <= nextMonthDays; i++) {
+          days.push({
+            day: i,
+            date: new Date(this.currentYear, this.currentMonth + 1, i),
+            isCurrentMonth: false
+          });
+        }
+
+        return days;
+      },
+
+      previousMonth() {
+        if (this.currentMonth === 0) {
+          this.currentYear--;
+          this.currentMonth = 11;
+        } else {
+          this.currentMonth--;
+        }
+      },
+
+      nextMonth() {
+        if (this.currentMonth === 11) {
+          this.currentYear++;
+          this.currentMonth = 0;
+        } else {
+          this.currentMonth++;
+        }
+      },
+
+      isToday(date) {
+        const today = new Date();
+        return date.toDateString() === today.toDateString();
+      },
+
+      isHoliday(date) {
+        const dateString = date.toISOString().split('T')[0];
+        return this.holidays.hasOwnProperty(dateString);
+      },
+
+      getHolidayTitle(date) {
+        const dateString = date.toISOString().split('T')[0];
+        return this.holidays[dateString] || '';
       }
-      
-      // Sort events by date
-      this.categories[category].sort((a, b) => new Date(a.date) - new Date(b.date));
-    },
-    
-    clearAllData() {
-      Object.keys(this.categories).forEach(category => {
-        this.categories[category] = [];
-      });
-    },
-    
-    previousMonth(category) {
-      // Placeholder for month navigation
-      console.log(`Previous month for ${category}`);
-    },
-    
-    nextMonth(category) {
-      // Placeholder for month navigation  
-      console.log(`Next month for ${category}`);
-    },
-    
-    init() {
-      // Load some initial sample data
-      this.generateRandomData();
-    }
-  }));
+    }));
 //   News Stories
 Alpine.data('newsStoriesSection', () => ({
     showControls: false,

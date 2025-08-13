@@ -95,36 +95,59 @@
           </div>
         </div>
       </div>
-
       <!-- Community Calendar Card -->
       <div class="ns-card bg-white border-2 border-[#1E3A8A] rounded-lg shadow-lg overflow-hidden transition-all duration-300 w-full h-[480px] md:h-[520px]">
         <div class="ns-card-header bg-[#1E3A8A] text-white text-center py-4 md:py-5">
-          <h3 class="text-lg md:text-xl font-bold tracking-wide">COMMUNITY CALENDAR</h3>
+          <h3 class="text-lg md:text-xl font-bold tracking-wide">Acedamic Calendar</h3>
         </div>
         <div class="ns-card-body bg-white p-4 md:p-5 h-[calc(100%-4rem)] overflow-y-auto">
+          <!-- Calendar Navigation -->
           <div class="ns-calendar-nav flex items-center justify-between mb-4 text-xs md:text-sm">
-            <button @click="previousMonth('community')" class="text-gray-600 hover:text-gray-800 p-1">‹</button>
-            <span class="font-medium" x-text="currentDateRange"></span>
-            <button @click="nextMonth('community')" class="text-gray-600 hover:text-gray-800 p-1">›</button>
+            <button @click="previousMonth()" class="text-gray-600 hover:text-gray-800 p-1">‹</button>
+            <span class="font-medium" x-text="monthNames[currentMonth] + ' ' + currentYear"></span>
+            <button @click="nextMonth()" class="text-gray-600 hover:text-gray-800 p-1">›</button>
           </div>
-          
-          <div class="ns-events space-y-3 md:space-y-4">
-            <template x-for="event in categories.community" :key="event.id">
-              <div class="ns-event border-l-3 border-transparent hover:border-purple-500 pl-2 transition-all duration-200 hover:bg-purple-50 p-2 rounded-r">
-                <div class="font-medium text-gray-800 text-sm md:text-base" x-text="event.date"></div>
-                <div class="text-xs md:text-sm text-gray-600 mb-1" x-text="event.time"></div>
-                <div class="text-xs md:text-sm" :class="event.color" x-text="event.title"></div>
+
+          <!-- Calendar Grid -->
+          <div class="grid grid-cols-7 gap-px bg-gray-200">
+            <!-- Day Headers -->
+            <template x-for="day in ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']" :key="day">
+              <div class="bg-white text-xs font-medium text-center text-gray-600 py-2">
+                <span x-text="day"></span>
               </div>
             </template>
-            <div x-show="categories.community.length === 0" class="text-center text-gray-500 py-8">
-              <p class="text-sm">No events scheduled</p>
-              <button @click="addRandomEvent('community')" class="text-purple-600 hover:text-purple-800 text-xs mt-2">
-                Add Sample Event
-              </button>
-            </div>
+
+            <!-- Calendar Days -->
+            <template x-for="(day, index) in calendarGrid" :key="index">
+              <div class="bg-white relative h-20 p-1 text-sm hover:bg-gray-50 transition-colors"
+                  :class="{
+                    'text-gray-400': !day.isCurrentMonth,
+                    'bg-red-50': isHoliday(day.date)
+                  }">
+                <div class="flex items-center justify-between">
+                  <span x-text="day.day"></span>
+                  <template x-if="isToday(day.date)">
+                    <span class="w-5 h-5 bg-blue-600 text-white rounded-full text-xs flex items-center justify-center">
+                      <span x-text="day.day"></span>
+                    </span>
+                  </template>
+                </div>
+                
+                <!-- Holiday Indicator -->
+                <template x-if="isHoliday(day.date)">
+                  <div class="absolute bottom-1 left-1 right-1">
+                    <div class="text-xs p-1 bg-red-100 rounded truncate" 
+                        x-text="getHolidayTitle(day.date)"></div>
+                  </div>
+                </template>
+              </div>
+            </template>
           </div>
         </div>
       </div>
+
+
+
     </div>
   </div>
 </section>
